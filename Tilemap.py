@@ -1,6 +1,6 @@
 import pygame
 
-from Tile import Tile
+from tile import *
 from config import DEFAULT_TILESIZE
 
 class Tilemap:
