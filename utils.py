@@ -20,7 +20,7 @@ def loadImg(path : str):
 
 def loadImgs(path : str):
     imgs = []
-    for imgName in os.listdir(f'{ASSETS_PATH} + path'):
+    for imgName in sorted(os.listdir(f'{ASSETS_PATH}{path}')):
         imgs.append(loadImg(f'{path}/{imgName}'))
 
     return imgs
