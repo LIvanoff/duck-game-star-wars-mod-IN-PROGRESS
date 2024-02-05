@@ -26,19 +26,17 @@ class Map(pygame.sprite.Sprite):
 
 
 class LocationQueue(object):
-    queue = []
-
     def __init__(self):
-        self.generate_loc()
+        self.queue = []
 
     def push(self, location):
         self.queue.append(location)
 
-    def generate_loc(self):
+    def generate_location(self):
         for i in range(ROUNDS):
             self.push(random.choice(LOCATION))
 
-    def select_loc(self):
+    def get_location(self):
         if len(self.queue) != 0:
             return self.queue.pop(0)
         else:
@@ -46,3 +44,8 @@ class LocationQueue(object):
 
     def size(self):
         return len(self.queue)
+
+# lq = LocationQueue()
+# lq.generate_location()
+# for i in range(ROUNDS):
+#     print(lq.get_location())
