@@ -46,3 +46,5 @@ WEAPONS = {
         'explosion_time': 3.5,
         'path': 'assets/images/weapons/sonic-imploder.png'}
 }
+
+JUMP_STRENGTH = 5
