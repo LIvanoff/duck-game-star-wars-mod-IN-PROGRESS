@@ -8,8 +8,6 @@ HEIGHT = 1080
 
 ASSETS_PATH = 'assets/'
 
-
-
 DEFAULT_TILESIZE = 21
 
 LOCATION = [
@@ -47,4 +45,5 @@ WEAPONS = {
         'path': 'assets/images/weapons/sonic-imploder.png'}
 }
 
+# PLAYER PROPS
 JUMP_STRENGTH = 5
