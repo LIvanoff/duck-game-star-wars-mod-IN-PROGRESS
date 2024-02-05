@@ -7,6 +7,7 @@ WIDTH = 1920
 HEIGHT = 1080
 
 ASSETS_PATH = 'assets/'
+LEVELS_PATH = 'levels/'
 
 DEFAULT_TILESIZE = 21
 
