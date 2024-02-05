@@ -2,11 +2,13 @@ import pygame
 import sys
 
 from config import *
-from entities import Entity
+from entitity import Entity
+from player import Player
 
 from utils import loadImg, loadImgs
 
 from tilemap import Tilemap
+from animation import Animation
 
 
 class Game:
@@ -18,10 +20,16 @@ class Game:
         self.assets = {
             'player'   : loadImg('images/characters/boba-fett/bobafett.png'),
             'crates'   : loadImgs('images/crates'),
-            'platforms': loadImgs('images/platforms')
+            'platforms': loadImgs('images/platforms'),
+            'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
+            't_frame'  : loadImg('images/map-setting/hangar/hangar-frm.png')
         }
 
-        print(self.assets)
+        self.animations = {
+            'player/run' : Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
+            'player/idle': Animation([loadImg('images/characters/boba-fett/bobafett.png')], imgDuration=5),
+            'player/jump': Animation([loadImg('images/crates/crate_blue.png')], imgDuration=5)
+        }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
@@ -29,19 +37,27 @@ class Game:
 
         self.tilemap = Tilemap(self)
 
-        self.player = Entity(self, 'player', (WIDTH / 4, HEIGHT / 4), (8, 15))
+        self.player = Player(self, 'player', (WIDTH / 4, HEIGHT / 3), (23, 46))
+
+        self.cameraOffset = [0, 0]
         
 
     def run(self):
         while True:
-            self.display.fill((100, 100, 100))
+            self.display.blit(pygame.transform.scale_by(self.assets['bg_menu'], 0.5), (0, 0))
 
-            self.tilemap.render(self.display)
+            self.cameraOffset[0] += (self.player.collisionRect().centerx - self.display.get_width() / 2 - self.cameraOffset[0]) / 20
+            self.cameraOffset[1] += (self.player.collisionRect().centery - self.display.get_height() / 2 - self.cameraOffset[1]) / 20
+            renderOffset = (int(self.cameraOffset[0]), int(self.cameraOffset[1]))
 
-            self.player.update(((self.player.pMov[1] - self.player.pMov[0]) * 5, 0))
-            self.player.render(self.display)
+            self.tilemap.render(self.display, renderOffset)
+
+            self.player.update(self.tilemap, ((self.player.pMov[1] - self.player.pMov[0]) * 4, 0))
+            self.player.render(self.display, renderOffset)
 
             self.handleEvents()
+
+            # self.display.blit(pygame.transform.scale_by(self.assets['t_frame'], 0.5), (0, 0))
 
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
 
@@ -59,6 +75,8 @@ class Game:
                     self.player.isMovingLeft()
                 if event.key == pygame.K_d:
                     self.player.isMovingRight()
+                if event.key == pygame.K_SPACE:  
+                    self.player.vel[1] = -4
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     self.player.notMovingLeft()

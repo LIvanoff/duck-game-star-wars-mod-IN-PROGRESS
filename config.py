@@ -1,6 +1,6 @@
 GAME_TITLE : str = "Sample text"
 
-CLOCK_TICKSPEED : int = 120
+CLOCK_TICKSPEED : int = 165
 
 WIDTH = 1920
 HEIGHT = 1080
