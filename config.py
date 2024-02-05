@@ -4,3 +4,5 @@ CLOCK_TICKSPEED : int = 120
 
 WIDTH = 1920
 HEIGHT = 1080
+
+ASSETS_PATH = 'assets/'
