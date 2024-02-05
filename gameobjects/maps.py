@@ -1,6 +1,8 @@
 import pygame
 import os
 from utils import load_map
+from config import *
+import random
 
 
 class Map(pygame.sprite.Sprite):
@@ -21,3 +23,26 @@ class Map(pygame.sprite.Sprite):
         map_folder = os.path.join(setting_folder, 'hangar')
         player_img = pygame.image.load(os.path.join(map_folder, 'hangar-bnf.png')).convert()
         return player_img
+
+
+class LocationQueue(object):
+    queue = []
+
+    def __init__(self):
+        self.generate_loc()
+
+    def push(self, location):
+        self.queue.append(location)
+
+    def generate_loc(self):
+        for i in range(ROUNDS):
+            self.push(random.choice(LOCATION))
+
+    def select_loc(self):
+        if len(self.queue) != 0:
+            return self.queue.pop(0)
+        else:
+            return IndexError
+
+    def size(self):
+        return len(self.queue)
