@@ -6,3 +6,13 @@ WIDTH = 1920
 HEIGHT = 1080
 
 ASSETS_PATH = 'assets/'
+
+LOCATION = [
+    'hangar',
+    'hoth',
+    'mustafar',
+    'bespin',
+    'tattoine'
+]
+
+ROUNDS = 5
