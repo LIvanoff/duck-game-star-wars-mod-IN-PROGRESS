@@ -17,12 +17,14 @@ class Game:
             'player' : loadImg('images/characters/boba-fett/bobafett.png')
         }
 
-        self.display = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
         self.clock = pygame.time.Clock()
 
-        self.player = Entity(self, 'player', (50, 50), (8, 15))
+        self.player = Entity(self, 'player', (WIDTH / 4, HEIGHT / 4), (8, 15))
         self.pMov = [False, False]
         
+
     def run(self):
         while True:
             self.display.fill((100, 100, 100))
@@ -31,6 +33,8 @@ class Game:
             self.player.render(self.display)
 
             self.handleEvents()
+
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
 
             pygame.display.update()
             self.clock.tick(CLOCK_TICKSPEED)
