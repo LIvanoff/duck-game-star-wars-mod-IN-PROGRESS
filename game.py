@@ -76,7 +76,8 @@ class Game:
                 if event.key == pygame.K_d:
                     self.player.isMovingRight()
                 if event.key == pygame.K_SPACE:  
-                    self.player.vel[1] = -4
+                    if self.player.currentAction != "jump":
+                        self.player.vel[1] = -JUMP_STRENGTH
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     self.player.notMovingLeft()
