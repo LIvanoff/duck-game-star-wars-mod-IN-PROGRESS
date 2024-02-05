@@ -7,7 +7,7 @@ WIDTH = 1920
 HEIGHT = 1080
 
 ASSETS_PATH = 'assets/'
-
+LEVELS_PATH = 'levels/'
 
 DEFAULT_TILESIZE = 21
 
@@ -45,3 +45,6 @@ WEAPONS = {
         'explosion_time': 3.5,
         'path': 'assets/images/weapons/sonic-imploder.png'}
 }
+
+# PLAYER PROPS
+JUMP_STRENGTH = 5

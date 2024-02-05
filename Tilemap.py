@@ -3,6 +3,8 @@ import pygame
 from tile import *
 from config import DEFAULT_TILESIZE
 
+import json
+
 
 NEIGHBOR_OFFSETS = [(-1, 0), (-1, 1), (-1, -1), (0, 0), (0, 1), (0, -1), (1, 0), (1, 1), (1, -1)]
 COLLIDABLE_TILES = {'crates'}
@@ -14,7 +16,7 @@ class Tilemap:
         self.onGridTilemap = {}
         self.offGridTilemap = []
 
-        self.mockTiles()
+        # self.mockTiles()
 
 
     def tilesAround(self, entity):
@@ -37,6 +39,33 @@ class Tilemap:
 
         return rects
 
+
+    def save(self, path):
+        onGridJsonable = {}
+        for k, v in self.onGridTilemap.items():
+            onGridJsonable[k] = v.toDict()
+
+        offGridJsonable = list(map(lambda it: it.toDict(), self.offGridTilemap))
+
+        with open(path, 'w') as savefile:
+            json.dump(
+                {
+                    'onGridTilemap'  : onGridJsonable,
+                    'tileSize'       : self.tileSize,
+                    'offGridTilemap' : offGridJsonable
+                },
+                savefile
+            )
+ 
+
+    def load(self, path):
+        with open(path, 'r') as loadfile:
+            levelData = json.load(loadfile)
+        
+        for k, v in levelData['onGridTilemap'].items():
+            self.onGridTilemap[k] = Tile.fromDict(v)
+        self.tileSize = levelData['tileSize']
+        self.offGridTilemap = list(map(lambda it: Tile.fromDict(it), levelData['offGridTilemap']))
 
     def mockTiles(self):
         for idx in range(-10, 35):

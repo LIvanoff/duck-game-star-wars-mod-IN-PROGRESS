@@ -36,8 +36,9 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.tilemap = Tilemap(self)
+        self.tilemap.load(f'{LEVELS_PATH}map.json')
 
-        self.player = Player(self, (WIDTH / 4, HEIGHT / 3), (23, 46))
+        self.player = Player(self, (100, 0), (23, 46))
 
         self.cameraOffset = [0, 0]
         
@@ -76,7 +77,8 @@ class Game:
                 if event.key == pygame.K_d:
                     self.player.isMovingRight()
                 if event.key == pygame.K_SPACE:  
-                    self.player.vel[1] = -4
+                    if self.player.currentAction != "jump":
+                        self.player.vel[1] = -JUMP_STRENGTH
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     self.player.notMovingLeft()
