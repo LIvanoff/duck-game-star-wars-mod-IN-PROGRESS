@@ -1,21 +1,57 @@
 import pygame
-import os
+import sys
+
+from config import *
+from entities import Entity
+
+from utils import loadImg
 
 
-class Game(object):
-    WIDTH = 600
-    HEIGHT = 480
+class Game:
+    def __init__(self) -> None:
+        pygame.init()
 
-    def __init__(self, map_name):
-        self.image = load_map(map_name)
-        self.rect = self.image.get_rect()
-        self.rect.center = (self.WIDTH / 2, self.HEIGHT / 2)
+        pygame.display.set_caption(GAME_TITLE)
 
-    def load_map(self, map_name: str):
-        game_folder = os.path.dirname(__file__)
-        assets_folder = os.path.join(game_folder, 'assets')
-        img_folder = os.path.join(assets_folder, 'images')
-        setting_folder = os.path.join(img_folder, 'map-setting')
-        map_folder = os.path.join(setting_folder, 'hangar')
-        player_img = pygame.image.load(os.path.join(map_folder, 'hangar-bnf.png')).convert()
-        return player_img
+        self.assets = {
+            'player' : loadImg('images/characters/boba-fett/bobafett.png')
+        }
+
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
+        self.clock = pygame.time.Clock()
+
+        self.player = Entity(self, 'player', (WIDTH / 4, HEIGHT / 4), (8, 15))
+        self.pMov = [False, False]
+        
+
+    def run(self):
+        while True:
+            self.display.fill((100, 100, 100))
+
+            self.player.update(((self.pMov[1] - self.pMov[0]) * 5, 0))
+            self.player.render(self.display)
+
+            self.handleEvents()
+
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))
+
+            pygame.display.update()
+            self.clock.tick(CLOCK_TICKSPEED)
+
+    
+    def handleEvents(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    self.pMov[0] = True
+                if event.key == pygame.K_d:
+                    self.pMov[1] = True
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_a:
+                    self.pMov[0] = False
+                if event.key == pygame.K_d:
+                    self.pMov[1] = False
