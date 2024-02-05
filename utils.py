@@ -16,3 +16,11 @@ def load_map(map_name: str):
 def loadImg(path : str):
     img = pygame.image.load(ASSETS_PATH + path)
     return img
+
+
+def loadImgs(path : str):
+    imgs = []
+    for imgName in os.listdir(f'{ASSETS_PATH} + path'):
+        imgs.append(loadImg(f'{path}/{imgName}'))
+
+    return imgs
