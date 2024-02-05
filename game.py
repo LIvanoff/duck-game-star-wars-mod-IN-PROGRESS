@@ -28,7 +28,7 @@ class Game:
         self.animations = {
             'player/run' : Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
             'player/idle': Animation([loadImg('images/characters/boba-fett/bobafett.png')], imgDuration=5),
-            'player/jump': Animation([loadImg('images/crates/crate_blue.png')], imgDuration=5)
+            'player/jump': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5)
         }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -37,7 +37,7 @@ class Game:
 
         self.tilemap = Tilemap(self)
 
-        self.player = Player(self, 'player', (WIDTH / 4, HEIGHT / 3), (23, 46))
+        self.player = Player(self, (WIDTH / 4, HEIGHT / 3), (23, 46))
 
         self.cameraOffset = [0, 0]
         

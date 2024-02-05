@@ -1,4 +1,5 @@
-GAME_TITLE : str = "Sample text"
+GAME_TITLE : str = "Some crappy game"
+EDITOR_TITLE : str = "Level Editor"
 
 CLOCK_TICKSPEED : int = 165
 

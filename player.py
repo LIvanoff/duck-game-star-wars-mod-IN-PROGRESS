@@ -2,7 +2,7 @@ from entitity import Entity
 from tilemap import Tilemap
 
 class Player(Entity):
-    def __init__(self, game, type: str, pos: tuple, size: tuple) -> None:
+    def __init__(self, game, pos: tuple, size: tuple) -> None:
         super().__init__(game, 'player', pos, size)
         self.airTime = 0
     
