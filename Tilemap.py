@@ -55,6 +55,9 @@ class Tilemap:
     
 
     def collisionRects(self, entity):
+        '''
+        Старая функция обработки коллизий по боксам
+        '''
         rects = []
         for tile in self.tilesAround(entity):
             if tile.clazz in Tile.collideables():
@@ -64,6 +67,9 @@ class Tilemap:
     
 
     def collisionTiles(self, entity):
+        '''
+        Функция обработки коллизий по тайлам
+        '''
         colTiles = []
         for tile in self.tilesAround(entity):
             if tile.clazz in Tile.collideables():
