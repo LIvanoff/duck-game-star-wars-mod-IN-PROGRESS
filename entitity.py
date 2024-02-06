@@ -15,6 +15,7 @@ class Entity:
         self.collisions = {'up' : False, 'down' : False, 'left' : False, 'right' : False}
         self.currentAction = ''
         self.animationOffset = (0, 0)
+        self.lastMov = [0, 0]
         self.setAction('idle')
 
 
@@ -108,6 +109,8 @@ class Entity:
                         entityRect.top = tile.collisionRect.bottom
                         self.collisions['up'] = True
                 self.pos[1] = entityRect.y
+
+        self.lastMov = mov
 
         self.vel[1] = min(5, self.vel[1] + 0.1)
 

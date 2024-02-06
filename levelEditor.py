@@ -43,7 +43,7 @@ class Editor:
 
         self.level = Level(self, name='test', background='bg_menu')
         try:
-            self.level.load(f'{LEVELS_PATH}map.json')
+            self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
         except FileNotFoundError:
             pass    
 

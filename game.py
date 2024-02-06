@@ -29,9 +29,10 @@ class Game:
         }
 
         self.animations = {
-            'player/run' : Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
-            'player/idle': Animation([loadImg('images/characters/boba-fett/bobafett.png')], imgDuration=5),
-            'player/jump': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5)
+            'player/run'      : Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
+            'player/idle'     : Animation([loadImg('images/characters/boba-fett/bobafett.png')], imgDuration=5),
+            'player/jump'     : Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
+            'player/wallslide': Animation([loadImg('images/characters/boba-fett/run/1.png')])
         }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -41,7 +42,7 @@ class Game:
         self.level = Level(self, name='test', background='bg_menu')
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
-        self.player = Player(self, (100, 0), (18, 40))
+        self.player : Player = Player(self, (100, 0), (18, 40))
 
         self.cameraOffset = [0, 0]
         
@@ -78,8 +79,7 @@ class Game:
                 if event.key == pygame.K_d:
                     self.player.isMovingRight()
                 if event.key == pygame.K_SPACE:  
-                    if self.player.currentAction != "jump":
-                        self.player.vel[1] = -JUMP_STRENGTH
+                    self.player.jump()
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     self.player.notMovingLeft()

@@ -1,7 +1,7 @@
 GAME_TITLE : str = "Some crappy game"
 EDITOR_TITLE : str = "Level Editor"
 
-CLOCK_TICKSPEED : int = 165
+CLOCK_TICKSPEED : int = 60
 
 WIDTH = 1920
 HEIGHT = 1080
@@ -48,3 +48,4 @@ WEAPONS = {
 
 # PLAYER PROPS
 JUMP_STRENGTH = 5
+MAX_JUMPS = 2
