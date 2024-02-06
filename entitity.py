@@ -14,7 +14,7 @@ class Entity:
         self.pMov = [False, False]
         self.collisions = {'up' : False, 'down' : False, 'left' : False, 'right' : False}
         self.currentAction = ''
-        self.animationOffset = (-3, 0)
+        self.animationOffset = (-3, -3)
         self.setAction('idle')
 
 

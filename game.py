@@ -38,7 +38,7 @@ class Game:
         self.tilemap = Tilemap(self)
         self.tilemap.load(f'{LEVELS_PATH}map.json')
 
-        self.player = Player(self, (100, 0), (23, 46))
+        self.player = Player(self, (100, 0), (21, 42))
 
         self.cameraOffset = [0, 0]
         
