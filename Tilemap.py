@@ -79,6 +79,9 @@ class Tilemap:
     
 
     def autotileOld(self):
+        '''
+        Старый автотайлинг, только для блоков
+        '''
         for location in self.onGridTilemap:
             tile = self.onGridTilemap[location]
             neighbors = set()
