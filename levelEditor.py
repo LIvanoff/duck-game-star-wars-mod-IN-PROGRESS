@@ -34,6 +34,7 @@ class Editor:
             'grass'    : loadImgs('images/tiles/grass'),
             'platforms': loadImgs('images/tiles/platforms'),
         }
+        print(self.assets)
 
         self.movement = [False, False, False, False]
 
@@ -143,7 +144,8 @@ class Editor:
                 if event.key == pygame.K_s:
                     self.movement[3] = True
                 if event.key == pygame.K_t:
-                    self.tilemap.autotile()
+                    # self.tilemap.autotile()
+                    self.tilemap.autotileAdvanced()
                 if event.key == pygame.K_o:
                     self.tilemap.save(f'{LEVELS_PATH}map.json')
                 if event.key == pygame.K_LALT:
