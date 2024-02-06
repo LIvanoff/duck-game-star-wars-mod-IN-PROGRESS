@@ -5,7 +5,7 @@ from config import *
 
 from utils import loadImg, loadImgs
 
-from tilemap import Tilemap
+from level import Level
 from tile import Tile
 
 RENDER_SCALE = 2.0
@@ -34,13 +34,16 @@ class Editor:
             'grass'    : loadImgs('images/tiles/grass'),
             'platforms': loadImgs('images/tiles/platforms'),
         }
+        self.bg_assets = {
+            'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
+        }
         print(self.assets)
 
         self.movement = [False, False, False, False]
 
-        self.tilemap = Tilemap(self)
+        self.level = Level(self, name='test', background='bg_menu')
         try:
-            self.tilemap.load(f'{LEVELS_PATH}map.json')
+            self.level.load(f'{LEVELS_PATH}map.json')
         except FileNotFoundError:
             pass    
 
@@ -68,31 +71,31 @@ class Editor:
             currentTileImg.set_alpha(140)
 
             renderOffset = (int(self.cameraOffset[0]), int(self.cameraOffset[1]))
-            self.tilemap.render(self.display, renderOffset)
+            self.level.render(self.display, renderOffset)
 
             self.mousePos = pygame.mouse.get_pos()
             self.mousePos = (self.mousePos[0]/RENDER_SCALE, self.mousePos[1]/RENDER_SCALE)
-            actualTilePos = (int((self.mousePos[0] + self.cameraOffset[0]) // self.tilemap.tileSize), int((self.mousePos[1] + self.cameraOffset[1]) // self.tilemap.tileSize))
+            actualTilePos = (int((self.mousePos[0] + self.cameraOffset[0]) // self.level.tileSize), int((self.mousePos[1] + self.cameraOffset[1]) // self.level.tileSize))
 
             # CURSOR
             if self.ongrid:
-                self.display.blit(currentTileImg, (actualTilePos[0] * self.tilemap.tileSize - self.cameraOffset[0], actualTilePos[1] * self.tilemap.tileSize - self.cameraOffset[1]))
+                self.display.blit(currentTileImg, (actualTilePos[0] * self.level.tileSize - self.cameraOffset[0], actualTilePos[1] * self.level.tileSize - self.cameraOffset[1]))
             else:
                 self.display.blit(currentTileImg, self.mousePos)
             # ASSET DISPLAY
             self.display.blit(pygame.transform.scale2x(currentTileImg), (10, 10))
             
             if self.clicking and self.ongrid:
-                self.tilemap.onGridTilemap[f'{actualTilePos[0]}:{actualTilePos[1]}'] = Tile(clazz=self.tiles[self.tileClazzIdx], type=self.tileType, pos=actualTilePos)
+                self.level.onGridTilemap[f'{actualTilePos[0]}:{actualTilePos[1]}'] = Tile(clazz=self.tiles[self.tileClazzIdx], type=self.tileType, pos=actualTilePos)
             if self.rightClicking:
                 deletingTileLocation = f'{actualTilePos[0]}:{actualTilePos[1]}'
-                if deletingTileLocation in self.tilemap.onGridTilemap:
-                    del self.tilemap.onGridTilemap[deletingTileLocation]
-                for tile in self.tilemap.offGridTilemap.copy():
+                if deletingTileLocation in self.level.onGridTilemap:
+                    del self.level.onGridTilemap[deletingTileLocation]
+                for tile in self.level.offGridTilemap.copy():
                     offGridTileImg = self.assets[tile.clazz][tile.type]
                     offGridTileImgRect = pygame.Rect(tile.pos[0] - self.cameraOffset[0], tile.pos[1] - self.cameraOffset[1], offGridTileImg.get_width(), offGridTileImg.get_height())
                     if offGridTileImgRect.collidepoint(self.mousePos):
-                        self.tilemap.offGridTilemap.remove(tile)
+                        self.level.offGridTilemap.remove(tile)
  
             self.handleEvents()
 
@@ -112,7 +115,7 @@ class Editor:
                 if event.button == 1:
                     self.clicking = True
                     if not self.ongrid:
-                        self.tilemap.offGridTilemap.append(Tile(clazz=self.tiles[self.tileClazzIdx], type=self.tileType, pos=(self.mousePos[0] + self.cameraOffset[0], self.mousePos[1] + self.cameraOffset[1])))
+                        self.level.offGridTilemap.append(Tile(clazz=self.tiles[self.tileClazzIdx], type=self.tileType, pos=(self.mousePos[0] + self.cameraOffset[0], self.mousePos[1] + self.cameraOffset[1])))
                 if event.button == 3: 
                     self.rightClicking = True
 
@@ -144,10 +147,9 @@ class Editor:
                 if event.key == pygame.K_s:
                     self.movement[3] = True
                 if event.key == pygame.K_t:
-                    # self.tilemap.autotile()
-                    self.tilemap.autotile()
+                    self.level.autotile()
                 if event.key == pygame.K_o:
-                    self.tilemap.save(f'{LEVELS_PATH}map.json')
+                    self.level.save(f'{LEVELS_PATH}{self.level.name}.json')
                 if event.key == pygame.K_LALT:
                     self.alting = True
                 if event.key == pygame.K_LCTRL:

@@ -7,7 +7,7 @@ from player import Player
 
 from utils import loadImg, loadImgs
 
-from tilemap import Tilemap
+from level import Level
 from animation import Animation
 
 
@@ -22,8 +22,10 @@ class Game:
             'crates'   : loadImgs('images/tiles/crates'),
             'grass'    : loadImgs('images/tiles/grass'),
             'platforms': loadImgs('images/tiles/platforms'),
+        }
+
+        self.bg_assets = {
             'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
-            't_frame'  : loadImg('images/map-setting/hangar/hangar-frm.png')
         }
 
         self.animations = {
@@ -36,8 +38,8 @@ class Game:
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
         self.clock = pygame.time.Clock()
 
-        self.tilemap = Tilemap(self)
-        self.tilemap.load(f'{LEVELS_PATH}map.json')
+        self.level = Level(self, name='test', background='bg_menu')
+        self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player = Player(self, (100, 0), (18, 40))
 
@@ -46,15 +48,13 @@ class Game:
 
     def run(self):
         while True:
-            self.display.blit(pygame.transform.scale_by(self.assets['bg_menu'], 0.5), (0, 0))
-
             self.cameraOffset[0] += (self.player.collisionRect().centerx - self.display.get_width() / 2 - self.cameraOffset[0]) / 20
             self.cameraOffset[1] += (self.player.collisionRect().centery - self.display.get_height() / 2 - self.cameraOffset[1]) / 20
             renderOffset = (int(self.cameraOffset[0]), int(self.cameraOffset[1]))
 
-            self.tilemap.render(self.display, renderOffset)
+            self.level.render(self.display, renderOffset)
 
-            self.player.update(self.tilemap, ((self.player.pMov[1] - self.player.pMov[0]) * 4, 0))
+            self.player.update(self.level, ((self.player.pMov[1] - self.player.pMov[0]) * 4, 0))
             self.player.render(self.display, renderOffset)
 
             self.handleEvents()

@@ -120,38 +120,38 @@ class Tilemap:
                     tile.type = AUTOTILE_BLOCK_MAP[neighbors]
 
 
-    def save(self, path):
-        onGridJsonable = {}
-        for k, v in self.onGridTilemap.items():
-            onGridJsonable[k] = v.toDict()
+    # def save(self, path):
+    #     onGridJsonable = {}
+    #     for k, v in self.onGridTilemap.items():
+    #         onGridJsonable[k] = v.toDict()
 
-        offGridJsonable = list(map(lambda it: it.toDict(), self.offGridTilemap))
+    #     offGridJsonable = list(map(lambda it: it.toDict(), self.offGridTilemap))
 
-        with open(path, 'w') as savefile:
-            json.dump(
-                {
-                    'onGridTilemap'  : onGridJsonable,
-                    'tileSize'       : self.tileSize,
-                    'offGridTilemap' : offGridJsonable
-                },
-                savefile
-            )
+    #     with open(path, 'w') as savefile:
+    #         json.dump(
+    #             {
+    #                 'onGridTilemap'  : onGridJsonable,
+    #                 'tileSize'       : self.tileSize,
+    #                 'offGridTilemap' : offGridJsonable
+    #             },
+    #             savefile
+    #         )
  
 
-    def load(self, path):
-        with open(path, 'r') as loadfile:
-            levelData = json.load(loadfile)
+    # def load(self, path):
+    #     with open(path, 'r') as loadfile:
+    #         levelData = json.load(loadfile)
         
-        for k, v in levelData['onGridTilemap'].items():
-            self.onGridTilemap[k] = Tile.fromDict(v)
-        self.tileSize = levelData['tileSize']
-        self.offGridTilemap = list(map(lambda it: Tile.fromDict(it), levelData['offGridTilemap']))
+    #     for k, v in levelData['onGridTilemap'].items():
+    #         self.onGridTilemap[k] = Tile.fromDict(v)
+    #     self.tileSize = levelData['tileSize']
+    #     self.offGridTilemap = list(map(lambda it: Tile.fromDict(it), levelData['offGridTilemap']))
 
-    def mockTiles(self):
-        for idx in range(-10, 35):
-            self.onGridTilemap[f'{idx}:10'] = Tile(clazz="crates", type=1, pos=(idx, 10))
-            self.onGridTilemap[f'{idx}:20'] = Tile(clazz="crates", type=1, pos=(idx, 20))
-            self.onGridTilemap[f'4:{1 + idx}'] = Tile(clazz="crates", type=2, pos=(4, 1+idx))
+    # def mockTiles(self):
+    #     for idx in range(-10, 35):
+    #         self.onGridTilemap[f'{idx}:10'] = Tile(clazz="crates", type=1, pos=(idx, 10))
+    #         self.onGridTilemap[f'{idx}:20'] = Tile(clazz="crates", type=1, pos=(idx, 20))
+    #         self.onGridTilemap[f'4:{1 + idx}'] = Tile(clazz="crates", type=2, pos=(4, 1+idx))
 
 
     def render(self, surface : pygame.Surface, offset = [0, 0]):
