@@ -164,7 +164,3 @@ class Tilemap:
                 if location in self.onGridTilemap:
                     tile = self.onGridTilemap[location]
                     surface.blit(self.game.assets[tile.clazz][tile.type], (tile.pos[0] * self.tileSize - offset[0], tile.pos[1] * self.tileSize - offset[1]))
-
-
-        # for _, tile in self.onGridTilemap.items():
-        #     surface.blit(self.game.assets[tile.clazz][tile.type], (tile.pos[0] * self.tileSize - offset[0], tile.pos[1] * self.tileSize - offset[1]))

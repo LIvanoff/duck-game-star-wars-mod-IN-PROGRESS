@@ -14,7 +14,7 @@ class Entity:
         self.pMov = [False, False]
         self.collisions = {'up' : False, 'down' : False, 'left' : False, 'right' : False}
         self.currentAction = ''
-        self.animationOffset = (-3, -3)
+        self.animationOffset = (0, 0)
         self.setAction('idle')
 
 
@@ -96,8 +96,13 @@ class Entity:
         for tile in tilemap.collisionTiles(self):
             if entityRect.colliderect(tile.collisionRect):
                 if frameMov[1] > 0:
-                    entityRect.bottom = tile.collisionRect.top
-                    self.collisions['down'] = True
+                    if tile.clazz not in Tile.platforms():
+                        entityRect.bottom = tile.collisionRect.top
+                        self.collisions['down'] = True
+                    else:
+                        if tile.collisionRect.collidepoint(entityRect.midbottom):
+                            entityRect.bottom = tile.collisionRect.top
+                            self.collisions['down'] = True
                 if frameMov[1] < 0:
                     if tile.clazz not in Tile.platforms():
                         entityRect.top = tile.collisionRect.bottom

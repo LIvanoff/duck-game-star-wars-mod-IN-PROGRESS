@@ -5,6 +5,7 @@ class Player(Entity):
     def __init__(self, game, pos: tuple, size: tuple) -> None:
         super().__init__(game, 'player', pos, size)
         self.airTime = 0
+        self.animationOffset = (-3, -5)
     
     def update(self, tilemap: Tilemap, mov=(0, 0)):
         super().update(tilemap, mov)
