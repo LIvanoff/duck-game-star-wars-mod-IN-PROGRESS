@@ -5,9 +5,32 @@ from config import DEFAULT_TILESIZE
 
 import json
 
+AUTOTILE_BLOCK_MAP = {
+    tuple(sorted([(1, 0), (0, 1)])) : 0,
+    tuple(sorted([(1, 0)])) : 1,
+    tuple(sorted([(1, 0), (0, 1), (-1, 0)])) : 2,
+    tuple(sorted([(-1, 0), (0, 1)])) : 3,
+    tuple(sorted([(-1, 0)])) : 4,
+    tuple(sorted([(-1, 0), (1, 0)])) : 5,
+    tuple(sorted([(1, 0), (0, 1), (0, -1)])) : 6,
+    tuple(sorted([(1, 0), (0, -1)])) : 7,
+    tuple(sorted([(-1, 0), (0, 1), (0, -1)])) : 8,
+    tuple(sorted([(0, -1)])) : 9,
+    tuple(sorted([(1, 0), (-1, 0), (0, -1), (0, 1)])) : 10,
+    tuple(sorted([(1, 0), (-1, 0), (0, -1)])) : 11,
+    tuple(sorted([(-1, 0), (0, -1)])) : 12,
+}
 
-NEIGHBOR_OFFSETS = [(-1, 0), (-1, 1), (-1, -1), (0, 0), (0, 1), (0, -1), (1, 0), (1, 1), (1, -1)]
-COLLIDABLE_TILES = {'crates'}
+AUTOTILE_PLATFORMS_MAP = {
+    tuple(sorted([(1, 0)])) : 1,
+    tuple(sorted([(-1, 0)])) : 2,
+    tuple(sorted([(1, 0), (-1, 0)])) : 0
+}
+
+NEIGHBOR_OFFSETS_COL = [(-1, 0), (-1, 1), (-1, -1), (0, 0), (0, 1), (0, -1), (1, 0), (1, 1), (1, -1)]
+NEIGHBOR_OFFSETS_AUTOTILE_BLOCKS = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+NEIGHBOR_OFFSETS_AUTOTILE_PLATFORMS = [(1, 0), (-1, 0)]
+AUTOTILE_CLAZZS = {'grass'}
 
 class Tilemap:
     def __init__(self, game, tileSize : int = DEFAULT_TILESIZE) -> None:
@@ -23,7 +46,7 @@ class Tilemap:
         tiles = []
         gridPos = (int((entity.pos[0] + entity.size[0]) // self.tileSize), int((entity.pos[1] + entity.size[1]) // self.tileSize))
 
-        for offset in NEIGHBOR_OFFSETS:
+        for offset in NEIGHBOR_OFFSETS_COL:
             checkLocation = f'{gridPos[0] + offset[0]}:{gridPos[1] + offset[1]}'
             if checkLocation in self.onGridTilemap.keys():
                 tiles.append(self.onGridTilemap[checkLocation])
@@ -32,12 +55,69 @@ class Tilemap:
     
 
     def collisionRects(self, entity):
+        '''
+        Старая функция обработки коллизий по боксам
+        '''
         rects = []
         for tile in self.tilesAround(entity):
-            if tile.clazz in COLLIDABLE_TILES:
-                rects.append(pygame.Rect(tile.pos[0] * self.tileSize, tile.pos[1] * self.tileSize, self.tileSize, self.tileSize))
+            if tile.clazz in Tile.collideables():
+                rects.append(tile.collideRect)
 
         return rects
+    
+
+    def collisionTiles(self, entity):
+        '''
+        Функция обработки коллизий по тайлам
+        '''
+        colTiles = []
+        for tile in self.tilesAround(entity):
+            if tile.clazz in Tile.collideables():
+                colTiles.append(tile)
+
+        return colTiles
+    
+
+    def autotileOld(self):
+        '''
+        Старый автотайлинг, только для блоков
+        '''
+        for location in self.onGridTilemap:
+            tile = self.onGridTilemap[location]
+            neighbors = set()
+            for shift in NEIGHBOR_OFFSETS_AUTOTILE_BLOCKS:
+                checkLocation = f'{tile.pos[0] + shift[0]}:{tile.pos[1] + shift[1]}'
+                if checkLocation in self.onGridTilemap:
+                    if self.onGridTilemap[checkLocation].clazz == tile.clazz:
+                        neighbors.add(shift)
+            neighbors = tuple(sorted(neighbors))
+            if (tile.clazz in AUTOTILE_CLAZZS) and (neighbors in AUTOTILE_BLOCK_MAP):
+                tile.type = AUTOTILE_BLOCK_MAP[neighbors]
+
+    
+    def autotile(self):
+        for location in self.onGridTilemap:
+            tile = self.onGridTilemap[location]
+            neighbors = set()
+            # PLATFORMS AUTOTILING
+            if tile.clazz in Tile.platforms():
+                for shift in NEIGHBOR_OFFSETS_AUTOTILE_PLATFORMS:
+                    checkLocation = f'{tile.pos[0] + shift[0]}:{tile.pos[1] + shift[1]}'
+                    if checkLocation in self.onGridTilemap:
+                        neighbors.add(shift)
+                neighbors = tuple(sorted(neighbors))
+                if (neighbors in AUTOTILE_PLATFORMS_MAP):
+                    tile.type = AUTOTILE_PLATFORMS_MAP[neighbors]
+            # BLOCKS AUTOTILING
+            elif tile.clazz in Tile.blocks():
+                for shift in NEIGHBOR_OFFSETS_AUTOTILE_BLOCKS:
+                    checkLocation = f'{tile.pos[0] + shift[0]}:{tile.pos[1] + shift[1]}'
+                    if checkLocation in self.onGridTilemap:
+                        if self.onGridTilemap[checkLocation].clazz == tile.clazz:
+                            neighbors.add(shift)
+                neighbors = tuple(sorted(neighbors))
+                if (tile.clazz in AUTOTILE_CLAZZS) and (neighbors in AUTOTILE_BLOCK_MAP):
+                    tile.type = AUTOTILE_BLOCK_MAP[neighbors]
 
 
     def save(self, path):

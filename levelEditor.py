@@ -30,9 +30,11 @@ class Editor:
         self.clock = pygame.time.Clock()
 
         self.assets = {
-            'crates'   : loadImgs('images/crates'),
-            'platforms': loadImgs('images/platforms'),
+            'crates'   : loadImgs('images/tiles/crates'),
+            'grass'    : loadImgs('images/tiles/grass'),
+            'platforms': loadImgs('images/tiles/platforms'),
         }
+        print(self.assets)
 
         self.movement = [False, False, False, False]
 
@@ -141,6 +143,9 @@ class Editor:
                     self.movement[2] = True
                 if event.key == pygame.K_s:
                     self.movement[3] = True
+                if event.key == pygame.K_t:
+                    # self.tilemap.autotile()
+                    self.tilemap.autotile()
                 if event.key == pygame.K_o:
                     self.tilemap.save(f'{LEVELS_PATH}map.json')
                 if event.key == pygame.K_LALT:

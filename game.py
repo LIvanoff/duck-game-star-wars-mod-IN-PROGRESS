@@ -19,8 +19,9 @@ class Game:
 
         self.assets = {
             'player'   : loadImg('images/characters/boba-fett/bobafett.png'),
-            'crates'   : loadImgs('images/crates'),
-            'platforms': loadImgs('images/platforms'),
+            'crates'   : loadImgs('images/tiles/crates'),
+            'grass'    : loadImgs('images/tiles/grass'),
+            'platforms': loadImgs('images/tiles/platforms'),
             'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
             't_frame'  : loadImg('images/map-setting/hangar/hangar-frm.png')
         }
@@ -38,7 +39,7 @@ class Game:
         self.tilemap = Tilemap(self)
         self.tilemap.load(f'{LEVELS_PATH}map.json')
 
-        self.player = Player(self, (100, 0), (23, 46))
+        self.player = Player(self, (100, 0), (21, 40))
 
         self.cameraOffset = [0, 0]
         
