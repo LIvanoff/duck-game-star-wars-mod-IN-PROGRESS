@@ -8,9 +8,9 @@ class Tile:
         self.type  = type
         self.pos   = pos
         if self.clazz in Tile.collideables():
-            self.collideRect = pygame.Rect(self.pos[0] * DEFAULT_TILESIZE, self.pos[1] * DEFAULT_TILESIZE, DEFAULT_TILESIZE, DEFAULT_TILESIZE)
+            self.collisionRect = pygame.Rect(self.pos[0] * DEFAULT_TILESIZE, self.pos[1] * DEFAULT_TILESIZE, DEFAULT_TILESIZE, DEFAULT_TILESIZE)
         else:
-            self.collideRect = None
+            self.collisionRect = None
 
     def toDict(self):
         return {
@@ -25,10 +25,10 @@ class Tile:
     
     @staticmethod
     def collideables():
-        return ('crates', 'grass')
+        return ('crates', 'grass', 'platforms')
     
     @staticmethod
-    def platofrms():
+    def platforms():
         return ('platforms', 'platforms_alt')
     
     @staticmethod

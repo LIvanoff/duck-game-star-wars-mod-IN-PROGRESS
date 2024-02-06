@@ -63,7 +63,16 @@ class Tilemap:
         return rects
     
 
-    def autotile(self):
+    def collisionTiles(self, entity):
+        colTiles = []
+        for tile in self.tilesAround(entity):
+            if tile.clazz in Tile.collideables():
+                colTiles.append(tile)
+
+        return colTiles
+    
+
+    def autotileOld(self):
         for location in self.onGridTilemap:
             tile = self.onGridTilemap[location]
             neighbors = set()
@@ -77,12 +86,12 @@ class Tilemap:
                 tile.type = AUTOTILE_BLOCK_MAP[neighbors]
 
     
-    def autotileAdvanced(self):
+    def autotile(self):
         for location in self.onGridTilemap:
             tile = self.onGridTilemap[location]
             neighbors = set()
             # PLATFORMS AUTOTILING
-            if tile.clazz in Tile.platofrms():
+            if tile.clazz in Tile.platforms():
                 for shift in NEIGHBOR_OFFSETS_AUTOTILE_PLATFORMS:
                     checkLocation = f'{tile.pos[0] + shift[0]}:{tile.pos[1] + shift[1]}'
                     if checkLocation in self.onGridTilemap:

@@ -145,7 +145,7 @@ class Editor:
                     self.movement[3] = True
                 if event.key == pygame.K_t:
                     # self.tilemap.autotile()
-                    self.tilemap.autotileAdvanced()
+                    self.tilemap.autotile()
                 if event.key == pygame.K_o:
                     self.tilemap.save(f'{LEVELS_PATH}map.json')
                 if event.key == pygame.K_LALT:
