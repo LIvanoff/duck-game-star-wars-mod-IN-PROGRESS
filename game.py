@@ -19,8 +19,9 @@ class Game:
 
         self.assets = {
             'player'   : loadImg('images/characters/boba-fett/bobafett.png'),
-            'crates'   : loadImgs('images/crates'),
-            'platforms': loadImgs('images/platforms'),
+            'crates'   : loadImgs('images/tiles/crates'),
+            'grass'    : loadImgs('images/tiles/grass'),
+            'platforms': loadImgs('images/tiles/platforms'),
             'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
             't_frame'  : loadImg('images/map-setting/hangar/hangar-frm.png')
         }
