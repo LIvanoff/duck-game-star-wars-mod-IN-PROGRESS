@@ -36,12 +36,14 @@ class Editor:
         }
         self.bg_assets = {
             'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
+            'bg_smlp'  : loadImg('images/map-setting/hangar/hangar_bg_small.png'),
+            'bg_smlj'  : loadImg('images/map-setting/hangar/hangar_bg_small.jpg')
         }
         print(self.assets)
 
         self.movement = [False, False, False, False]
 
-        self.level = Level(self, name='test', background='bg_menu')
+        self.level = Level(self, name='test', background='bg_smlp')
         try:
             self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
         except FileNotFoundError:

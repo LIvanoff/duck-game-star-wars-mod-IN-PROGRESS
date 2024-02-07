@@ -41,6 +41,6 @@ class Level(Tilemap):
         self.offGridTilemap = list(map(lambda it: Tile.fromDict(it), levelData['offGridTilemap']))
 
 
-    def render(self, surface: pygame.Surface, offset=[0,0], scale=0.5):
+    def render(self, surface: pygame.Surface, offset=[0,0], scale=1):
         surface.blit(pygame.transform.scale_by(self.game.bg_assets['bg_menu'], scale), (0, 0))
         super().render(surface, offset)

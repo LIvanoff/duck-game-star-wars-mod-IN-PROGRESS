@@ -26,6 +26,8 @@ class Game:
 
         self.bg_assets = {
             'bg_menu'  : loadImg('images/map-setting/hangar/hangar-bg.png'),
+            'bg_smlp'  : loadImg('images/map-setting/hangar/hangar_bg_small.png'),
+            'bg_smlj'  : loadImg('images/map-setting/hangar/hangar_bg_small.jpg')
         }
 
         self.animations = {
@@ -39,7 +41,7 @@ class Game:
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
         self.clock = pygame.time.Clock()
 
-        self.level = Level(self, name='test', background='bg_menu')
+        self.level = Level(self, name='test', background='bg_smlj')
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player : Player = Player(self, (100, 0), (18, 40))
@@ -53,7 +55,7 @@ class Game:
             self.cameraOffset[1] += (self.player.collisionRect().centery - self.display.get_height() / 2 - self.cameraOffset[1]) / 20
             renderOffset = (int(self.cameraOffset[0]), int(self.cameraOffset[1]))
 
-            self.level.render(self.display, renderOffset)
+            self.level.render(self.display, renderOffset, 0.5)
 
             self.player.update(self.level, ((self.player.pMov[1] - self.player.pMov[0]) * 4, 0))
             self.player.render(self.display, renderOffset)
