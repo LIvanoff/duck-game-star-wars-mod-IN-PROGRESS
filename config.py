@@ -54,10 +54,13 @@ WEAPONS = {
     'thermal imploder': {
         'name': 'thermal imploder',
         'damage': 100,
+        'ammo_num': 1,
+        'decay': 0.0,
         'radius': 300,
         'explosion_time': 4.,
         'img_path': 'images/weapons/thermal_imploder.png',
-        'sound_path': 'sounds/weapons/thermal_imploder.mp3'}
+        'imgsize': (3, 6),
+        'sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'}
 }
 
 # PLAYER PROPS
