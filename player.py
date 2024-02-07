@@ -11,6 +11,8 @@ class Player(Entity):
         self.jumps = MAX_JUMPS
         self.wallslide = False
         self.currentWeapon : Weapon = None
+        self.direction = 1
+        self.health = 100
 
 
     def jump(self):
@@ -33,6 +35,7 @@ class Player(Entity):
     def isMovingRight(self):
         self.flip = False
         self.pMov[1] = True
+        self.direction = 1
 
     def notMovingRight(self):
         self.pMov[1] = False
@@ -40,6 +43,7 @@ class Player(Entity):
     def isMovingLeft(self):
         self.flip = True
         self.pMov[0] = True
+        self.direction = -1
 
     def notMovingLeft(self):
         self.pMov[0] = False
