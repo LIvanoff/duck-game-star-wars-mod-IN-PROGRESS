@@ -10,6 +10,8 @@ from utils import loadImg, loadImgs
 from level import Level
 from animation import Animation
 from gameobjects.weapons import Weapon
+from gameobjects.weaponthrowable import Grenade
+from config import WEAPONS
 
 
 class Game:
@@ -40,11 +42,15 @@ class Game:
             'player/idle_weapon/e-11'     : Animation([loadImg('images/characters/boba-fett/boba_e11.png')]),
             'player/jump_weapon/e-11'     : Animation([loadImg('images/characters/boba-fett/run_e11/2.png')], imgDuration=5),
             'player/wallslide_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/1.png')], imgDuration=5),
-            'weapon/e-11/idle'            : Animation([loadImg('images/weapons/e11.png')])
+
+            'weapon/thermal_imploder/idle'            : Animation([loadImg('images/weapons/thermal_imploder.png')]),
+            'player/run_weapon/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
+            'player/jump_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
+            'player/idle_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')])
         }
 
         self.weaponAssets = {
-            'weapon/e-11' : loadImg(WEAPONS['e-11']['path'])
+            'weapon/e-11' : loadImg(WEAPONS['e-11']['img_path'])
         }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -55,8 +61,14 @@ class Game:
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player : Player = Player(self, (100, 0), (18, 40))
-        self.testWeapon : Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13))
-        self.testWeapon.statsFromDict(WEAPONS['e-11'])
+        # self.testWeapon: Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13), WEAPONS['e-11'])
+        self.testWeapon: Grenade = Grenade(self, 'weapon/thermal_imploder', (210, 0), WEAPONS['thermal imploder']['imgsize'], WEAPONS['thermal imploder'])
+
+        self.testWeapon.exlosion()
+        # self.testWeapon : Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13))
+
+        # мне кажется это лишнее и лучше перенести в конструктор
+        # self.testWeapon.statsFromDict(WEAPONS['e-11'])
 
         self.cameraOffset = [0, 0]
         
