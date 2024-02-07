@@ -15,11 +15,11 @@ class Player(Entity):
         if self.wallslide:
             print(self.lastMov)
             if self.flip and self.lastMov[0] < 0:
-                self.vel[0] = JUMP_STRENGTH * 1.5
+                self.vel[0] = JUMP_STRENGTH
                 self.vel[1] = -JUMP_STRENGTH / 1.1
                 self.airTime = 5
             if not self.flip and self.lastMov[0] > 0:
-                self.vel[0] = -JUMP_STRENGTH * 1.5
+                self.vel[0] = -JUMP_STRENGTH
                 self.vel[1] = -JUMP_STRENGTH / 1.1
                 self.airTime = 5
         elif self.jumps:
