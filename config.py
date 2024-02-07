@@ -49,8 +49,11 @@ WEAPONS = {
         'name': 'sonic imploder',
         'damage': 100,
         'radius': 200,
-        'explosion_time': 3.5,
-        'img_path': 'images/weapons/sonic_imploder.png'},
+        'explosion_time': 40.5,
+        'img_path': 'images/weapons/sonic_imploder.png',
+        'imgsize': (7, 13),
+        'shot_sound_path': '',
+        'explosion_sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'},
     'thermal imploder': {
         'name': 'thermal imploder',
         'damage': 100,
@@ -59,7 +62,7 @@ WEAPONS = {
         'radius': 300,
         'explosion_time': 40.,
         'img_path': 'images/weapons/thermal_imploder.png',
-        'imgsize': (3, 6),
+        'imgsize': (7, 13),
         'shot_sound_path': '',
         'explosion_sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'}
 }
