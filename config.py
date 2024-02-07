@@ -60,7 +60,8 @@ WEAPONS = {
         'explosion_time': 4.,
         'img_path': 'images/weapons/thermal_imploder.png',
         'imgsize': (3, 6),
-        'sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'}
+        'shot_sound_path': '',
+        'explosion_sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'}
 }
 
 # PLAYER PROPS
