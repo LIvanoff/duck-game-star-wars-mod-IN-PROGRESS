@@ -1,18 +1,35 @@
+import pygame
+from pygame import mixer
+
+from entitity import Entity
+from tilemap import Tilemap
 
 
-class Weapon:
+class Weapon(Entity):
     def __init__(self,
-                 damage: int,
-                 ammo_num: int,
-                 path: str,
-                 decay: float = None,
-                 radius: int = None,
-                 explosion_time: float = None
-                 ):
-        self.damage = damage
-        self.ammo_num = ammo_num
-        self.path = path
-        self.decay = decay
-        self.radius = radius
-        self.explosion_time = explosion_time
+                 game,
+                 type: str,
+                 pos: tuple,
+                 size: tuple,
+                 statsDict: dict
+                 ) -> None:
+        super().__init__(game, type, pos, size)
+        self.damage = statsDict['damage']
+        self.ammo_num = statsDict['ammo_num']
+        self.decay = statsDict['decay']
+        self.shot_sound = statsDict['shot_sound_path']
+
+        self.isPickedUp = False
+
+
+    def statsFromDict(self, statsDict: dict):
+        self.damage = statsDict['damage']
+        self.ammo_num = statsDict['ammo_num']
+        self.decay = statsDict['decay']
+
+    def update(self, tilemap: Tilemap, mov=(0, 0)):
+        super().update(tilemap, mov)
+        if self.game.player.collisionRect().colliderect(self.collisionRect()):
+            self.isPickedUp = True
+            self.game.player.currentWeapon = self
 
