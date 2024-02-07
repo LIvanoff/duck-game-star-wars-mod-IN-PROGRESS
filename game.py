@@ -9,6 +9,7 @@ from utils import loadImg, loadImgs
 
 from level import Level
 from animation import Animation
+from gameobjects.weapons import Weapon
 
 
 class Game:
@@ -34,7 +35,12 @@ class Game:
             'player/run'      : Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
             'player/idle'     : Animation([loadImg('images/characters/boba-fett/bobafett.png')], imgDuration=5),
             'player/jump'     : Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
-            'player/wallslide': Animation([loadImg('images/characters/boba-fett/run/1.png')])
+            'player/wallslide': Animation([loadImg('images/characters/boba-fett/run/1.png')]),
+            'e-11/idle'       : Animation([loadImg('images/weapons/e11.png')])
+        }
+
+        self.weaponAssets = {
+            'e-11' : loadImg(WEAPONS['e-11']['path'])
         }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -45,6 +51,8 @@ class Game:
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player : Player = Player(self, (100, 0), (18, 40))
+        self.testWeapon : Weapon = Weapon(self, 'e-11', (200, 0), (34, 13))
+        self.testWeapon.statsFromDict(WEAPONS['e-11'])
 
         self.cameraOffset = [0, 0]
         
@@ -59,6 +67,10 @@ class Game:
 
             self.player.update(self.level, ((self.player.pMov[1] - self.player.pMov[0]) * 4, 0))
             self.player.render(self.display, renderOffset)
+
+            if not self.testWeapon.isPickedUp:
+                self.testWeapon.update(self.level)
+                self.testWeapon.render(self.display, renderOffset)
 
             self.handleEvents()
 

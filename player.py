@@ -9,7 +9,7 @@ class Player(Entity):
         self.animationOffset = (-3, -5)
         self.jumps = MAX_JUMPS
         self.wallslide = False
-    
+
 
     def jump(self):
         if self.wallslide:
@@ -26,6 +26,21 @@ class Player(Entity):
             self.vel[1] = -JUMP_STRENGTH
             self.jumps -= 1
             self.airTime = 5
+
+
+    def isMovingRight(self):
+        self.flip = False
+        self.pMov[1] = True
+
+    def notMovingRight(self):
+        self.pMov[1] = False
+
+    def isMovingLeft(self):
+        self.flip = True
+        self.pMov[0] = True
+
+    def notMovingLeft(self):
+        self.pMov[0] = False
 
     
     def update(self, tilemap: Tilemap, mov=(0, 0)):
