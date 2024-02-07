@@ -5,7 +5,7 @@ from config import *
 from entitity import Entity
 from player import Player
 
-from utils import loadImg, loadImgs
+from utils import loadImg, loadImgs, loadSound
 
 from level import Level
 from animation import Animation
@@ -38,22 +38,26 @@ class Game:
             'player/idle': Animation([loadImg('images/characters/boba-fett/bobafett.png')], imgDuration=5),
             'player/jump': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
             'player/wallslide': Animation([loadImg('images/characters/boba-fett/run/1.png')]),
+            
+            'weapon/e-11/idle': Animation([loadImg('images/weapons/e11.png')]),
             'player/run_weapon/e-11': Animation(loadImgs('images/characters/boba-fett/run_e11'), imgDuration=8),
             'player/idle_weapon/e-11': Animation([loadImg('images/characters/boba-fett/boba_e11.png')]),
             'player/jump_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/2.png')], imgDuration=5),
-            'player/wallslide_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/1.png')],
-                                                      imgDuration=5),
+            'player/wallslide_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/1.png')],imgDuration=5),
 
             'weapon/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
             'player/run_weapon/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
-            'player/jump_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')],
-                                                             imgDuration=5),
+            'player/jump_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
             'player/idle_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')])
         }
 
-        self.weaponAssets = {
-            'weapon/e-11': loadImg(WEAPONS['e-11']['img_path'])
+        self.sounds = {
+            'weapon/e-11/shoot' : loadSound('sounds/weapons/thermal_imploder.mp3')
         }
+
+        # self.weaponAssets = {
+        #     'weapon/e-11': loadImg(WEAPONS['e-11']['img_path'])
+        # }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
@@ -63,9 +67,8 @@ class Game:
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player: Player = Player(self, (100, 0), (18, 40))
-        # self.testWeapon: Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13), WEAPONS['e-11'])
-        self.testWeapon: Grenade = Grenade(self, 'weapon/thermal_imploder', (210, 0),
-                                           WEAPONS['thermal imploder']['imgsize'], WEAPONS['thermal imploder'])
+        self.testWeapon: Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13), WEAPONS['e-11'])
+        # self.testWeapon: Grenade = Grenade(self, 'weapon/thermal_imploder', (210, 0), WEAPONS['thermal imploder']['imgsize'], WEAPONS['thermal imploder'])
 
         # self.testWeapon : Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13))
 
@@ -99,10 +102,10 @@ class Game:
                 self.testWeapon.update(self.level)
                 self.testWeapon.render(self.display, renderOffset)
 
-            if self.testWeapon.isThrow and not self.testWeapon.isBlowup:
-                print('is throw')
-                self.testWeapon.throw(self.player.direction)
-                self.grenade = False
+            # if self.testWeapon.isThrow and not self.testWeapon.isBlowup:
+            #     print('is throw')
+            #     self.testWeapon.throw(self.player.direction)
+            #     self.grenade = False
 
             self.handleEvents()
 
@@ -118,6 +121,11 @@ class Game:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if self.player.currentWeapon:
+                        self.player.currentWeapon.shoot()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
                     self.player.isMovingLeft()
