@@ -23,7 +23,7 @@ class Player(Entity):
                 self.vel[1] = -JUMP_STRENGTH / 1.1
                 self.airTime = 5
         elif self.jumps:
-            self.vel[1] = -4
+            self.vel[1] = -JUMP_STRENGTH
             self.jumps -= 1
             self.airTime = 5
 
