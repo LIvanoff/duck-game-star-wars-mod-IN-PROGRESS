@@ -29,4 +29,4 @@ class Weapon(Entity):
         super().update(tilemap, mov)
         if self.game.player.collisionRect().colliderect(self.collisionRect()):
             self.isPickedUp = True
-            # self.game.player.setAction('carryingE-11')
+            self.game.player.currentWeapon = self
