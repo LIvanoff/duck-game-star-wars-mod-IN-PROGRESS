@@ -88,3 +88,7 @@ class Player(Entity):
             self.vel[0] = max(self.vel[0] - 0.1, 0)
         else:
             self.vel[0] = min(self.vel[0] + 0.1, 0)
+
+
+        if self.currentWeapon:
+            self.currentWeapon.pos = self.pos

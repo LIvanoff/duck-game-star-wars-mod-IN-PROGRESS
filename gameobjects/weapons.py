@@ -21,6 +21,11 @@ class Weapon(Entity):
 
         self.isPickedUp = False
 
+    
+    def shoot(self):
+        shootSound = self.game.sounds[f'{self.type}/shoot']
+        shootSound.play()
+
 
     def statsFromDict(self, statsDict: dict):
         self.damage = statsDict['damage']

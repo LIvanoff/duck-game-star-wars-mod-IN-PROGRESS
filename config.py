@@ -38,7 +38,9 @@ WEAPONS = {
         'ammo_num': 20,
         'decay': 0.2,
         # 'overheating_time': 2,
-        'img_path': 'images/weapons/e11.png'},
+        'img_path': 'images/weapons/e11.png',
+        'shot_sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'
+    },
     'dl-44': {
         'name': 'dl-44',
         'damage': 50,

@@ -1,5 +1,6 @@
 import os
 import pygame
+import pygame.mixer as mixer
 
 from config import ASSETS_PATH
 
@@ -24,3 +25,8 @@ def loadImgs(path : str):
         imgs.append(loadImg(f'{path}/{imgName}'))
 
     return imgs
+
+
+def loadSound(path : str):
+    sound = pygame.mixer.Sound(ASSETS_PATH + path)
+    return sound
