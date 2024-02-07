@@ -1,6 +1,7 @@
 from entitity import Entity
 from tilemap import Tilemap
 from config import *
+from gameobjects.weapons import Weapon
 
 class Player(Entity):
     def __init__(self, game, pos: tuple, size: tuple) -> None:
@@ -9,6 +10,7 @@ class Player(Entity):
         self.animationOffset = (-3, -5)
         self.jumps = MAX_JUMPS
         self.wallslide = False
+        self.currentWeapon : Weapon = None
 
 
     def jump(self):
@@ -58,15 +60,25 @@ class Player(Entity):
             if self.collisions['right']:
                 self.flip = False
             else: self.flip = True
-            self.setAction('wallslide')
+            if self.currentWeapon:
+                self.setAction(f'wallslide_{self.currentWeapon.type}')
+            else:
+                self.setAction('wallslide')
+
 
         if not self.wallslide:
             if self.airTime > 4:
-                self.setAction('jump')
+                if self.currentWeapon:
+                    self.setAction(f'jump_{self.currentWeapon.type}')
+                else: self.setAction('jump')
             elif mov[0] != 0:
-                self.setAction('run')
+                if self.currentWeapon:
+                    self.setAction(f'run_{self.currentWeapon.type}')
+                else: self.setAction('run')
             else:
-                self.setAction('idle')
+                if self.currentWeapon:
+                    self.setAction(f'idle_{self.currentWeapon.type}')
+                else: self.setAction('idle')
 
         if self.vel[0] > 0:
             self.vel[0] = max(self.vel[0] - 0.1, 0)
