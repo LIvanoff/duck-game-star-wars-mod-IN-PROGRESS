@@ -26,23 +26,27 @@ ROUNDS = 5
 
 WEAPONS = {
     'dlt-19': {
+        'name': 'dlt-19',
         'damage': 100,
         'ammo_num': 3,
         'decay': 1.5,
         'path': 'images/weapons/dlt19.png'
     },
     'e-11': {
+        'name': 'e-11',
         'damage': 30,
         'ammo_num': 20,
         'decay': 0.2,
         # 'overheating_time': ,
         'path': 'images/weapons/e11.png'},
     'dl-44': {
+        'name': 'dl-44',
         'damage': 50,
         'ammo_num': 10,
         'decay': 0.7,
         'path': 'images/weapons/dl44.png'},
     'sonic imploder': {
+        'name': 'sonic imploder',
         'damage': 100,
         'radius': 20,
         'explosion_time': 3.5,
