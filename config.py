@@ -3,7 +3,7 @@ EDITOR_TITLE : str = "Level Editor"
 
 CLOCK_TICKSPEED : int = 60
 
-IS_FULLSCREEN = False
+IS_FULLSCREEN = True
 
 WIDTH = 960
 HEIGHT = 540

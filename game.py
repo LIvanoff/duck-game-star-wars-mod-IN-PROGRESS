@@ -59,6 +59,8 @@ class Game:
             'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3'),
             'weapon/cocking': loadSound('sounds/weapons/cocking.mp3')
         }
+
+        self.projectiles = []
         
         if IS_FULLSCREEN:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -112,6 +114,14 @@ class Game:
                 self.testWeapon.update(self.level)
                 self.testWeapon.render(self.display, renderOffset)
 
+            for projectile in self.projectiles:
+                projectile.update(self.level)
+
+            for projectile in self.projectiles:
+                projectile.render(self.display, renderOffset)
+                
+            self.removeDeadProjectiles()
+
             # if self.testWeapon.isThrow and not self.testWeapon.isBlowup:
             #     print('is throw')
             #     self.testWeapon.throw(self.player.direction)
@@ -152,3 +162,6 @@ class Game:
                     self.player.notMovingLeft()
                 if event.key == pygame.K_d:
                     self.player.notMovingRight()
+
+    def removeDeadProjectiles(self):
+        self.projectiles = [x for x in self.projectiles if not x.dead]

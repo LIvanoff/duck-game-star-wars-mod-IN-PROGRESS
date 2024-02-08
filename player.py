@@ -93,14 +93,7 @@ class Player(Entity):
         if self.currentWeapon:
             self.currentWeapon.pos = self.pos
             self.currentWeapon.frame += 1
-            self.currentWeapon.removeDeadProjectiles()
             self.currentWeapon.flip = self.flip
-            for projectile in self.currentWeapon.projectiles:
-                projectile.update(tilemap)
     
     def render(self, surface: Surface, offset=[0, 0]):
         super().render(surface, offset)
-
-        if self.currentWeapon:
-            for projectile in self.currentWeapon.projectiles:
-                projectile.render(surface, offset)

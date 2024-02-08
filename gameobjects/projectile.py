@@ -11,6 +11,7 @@ class Projectile(Entity):
             actualx = pos[0]
         actualy = pos[1] + int(game.player.size[1] / 2)
         super().__init__(game, type, (actualx, actualy), size)
+        # super().__init__(game, type, pos, size)
         self.flip = game.player.flip
         self.frame = 0
         self.lifetime = lifetime
