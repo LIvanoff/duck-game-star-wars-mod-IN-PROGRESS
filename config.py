@@ -3,11 +3,11 @@ EDITOR_TITLE : str = "Level Editor"
 
 CLOCK_TICKSPEED : int = 60
 
-# WIDTH = 1920
-# HEIGHT = 1080
+WIDTH = 1920
+HEIGHT = 1080
 
-WIDTH = 960
-HEIGHT = 540
+# WIDTH = 960
+# HEIGHT = 540
 
 ASSETS_PATH = 'assets/'
 LEVELS_PATH = 'levels/'
