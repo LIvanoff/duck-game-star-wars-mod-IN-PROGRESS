@@ -2,6 +2,7 @@ import pygame
 
 from tilemap import *
 
+# TODO: Создать класс BaseEntity без ускорений и лишних элементов
 class Entity:
     flip = False
 
@@ -72,7 +73,9 @@ class Entity:
 
         self.lastMov = mov
 
-        self.vel[1] = min(5, self.vel[1] + 0.1)
+        # Ну это прям фиксить надо но пока хз как )))0
+        if 'projectile' not in self.type:
+            self.vel[1] = min(5, self.vel[1] + 0.1)
 
         if self.collisions['down'] or self.collisions['up']:
             self.vel[1] = 0
