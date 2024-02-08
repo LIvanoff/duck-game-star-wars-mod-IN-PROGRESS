@@ -9,8 +9,8 @@ from utils import loadImg, loadImgs, loadSound
 
 from level import Level
 from animation import Animation
-from gameobjects.weapons import Weapon
 from gameobjects.weaponthrowable import Grenade
+from gameobjects.weaponwithprojectile import WeaponWithProjectile
 from config import WEAPONS
 
 
@@ -48,16 +48,14 @@ class Game:
             'weapon/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
             'player/run_weapon/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
             'player/jump_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
-            'player/idle_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')])
+            'player/idle_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')]),
+
+            'projectile_red/idle': Animation([loadImg('images/shots/shot_red.png')])
         }
 
         self.sounds = {
-            'weapon/e-11/shoot' : loadSound('sounds/weapons/thermal_imploder.mp3')
+            'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3')
         }
-
-        # self.weaponAssets = {
-        #     'weapon/e-11': loadImg(WEAPONS['e-11']['img_path'])
-        # }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
@@ -67,7 +65,7 @@ class Game:
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player: Player = Player(self, (100, 0), (18, 40))
-        self.testWeapon: Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13), WEAPONS['e-11'])
+        self.testWeapon: WeaponWithProjectile = WeaponWithProjectile(self, 'weapon/e-11', (200, 0), (34, 13), WEAPONS['e-11'])
         # self.testWeapon: Grenade = Grenade(self, 'weapon/thermal_imploder', (210, 0), WEAPONS['thermal imploder']['imgsize'], WEAPONS['thermal imploder'])
 
         # self.testWeapon : Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13))
