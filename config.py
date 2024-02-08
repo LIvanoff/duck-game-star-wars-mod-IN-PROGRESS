@@ -4,7 +4,7 @@ EDITOR_TITLE : str = "Level Editor"
 CLOCK_TICKSPEED : int = 60
 
 IS_FULLSCREEN = True
-MUSIC_ENABLED = True
+MUSIC_ENABLED = False
 
 WIDTH = 960
 HEIGHT = 540
