@@ -12,6 +12,7 @@ class ProjectileExplosive(Projectile):
         self.game.sounds[f'{self.type}/explode'].play()
 
     def update(self, tilemap: Tilemap):
+        # Переделать, а то она скачет лол
         if self.flip: mov = (-EXPLOSIVE_PROJECTILE_SPEED, -3)
         else: mov = (EXPLOSIVE_PROJECTILE_SPEED, -3)
         super().update(tilemap, mov)
