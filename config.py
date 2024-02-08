@@ -30,7 +30,8 @@ WEAPONS = {
         'damage': 100,
         'ammo_num': 3,
         'decay': 1.5,
-        'img_path': 'images/weapons/dlt19d.png'
+        'img_path': 'images/weapons/dlt19d.png',
+        'shot_sound_path': 'assets/sounds/weapons/dlt19.mp3'
     },
     'e-11': {
         'name': 'e-11',
@@ -39,14 +40,23 @@ WEAPONS = {
         'decay': 0.2,
         # 'overheating_time': 2,
         'img_path': 'images/weapons/e11.png',
-        'shot_sound_path': 'assets/sounds/weapons/thermal_imploder.mp3'
+        'shot_sound_path': 'assets/sounds/weapons/e11.mp3'
     },
     'dl-44': {
         'name': 'dl-44',
         'damage': 50,
         'ammo_num': 10,
         'decay': 0.7,
-        'img_path': 'images/weapons/dl44.png'},
+        'img_path': 'images/weapons/dl44.png',
+        'shot_sound_path': 'assets/sounds/weapons/dl44.mp3'},
+    'dlt-44': {
+        'name': 'dlt-19d',
+        'damage': 33,
+        'ammo_num': 100,
+        'decay': 0.5,
+        'img_path': 'images/weapons/dlt19d.png',
+        'shot_sound_path': 'assets/sounds/weapons/dlt19.mp3'
+    },
     'sonic imploder': {
         'name': 'sonic imploder',
         'damage': 100,
