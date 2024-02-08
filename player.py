@@ -14,7 +14,7 @@ class Player(Entity):
         self.currentWeapon : Weapon = None
         self.direction = 1
         self.health = 100
-
+        self.dashing = 0
 
     def jump(self):
         if self.wallslide:
@@ -30,6 +30,14 @@ class Player(Entity):
             self.vel[1] = -JUMP_STRENGTH
             self.jumps -= 1
             self.airTime = 5
+
+
+    def dash(self):
+        if not self.dashing:
+            if self.flip:
+                self.dashing = -DASH_DURATION
+            else:
+                self.dashing = DASH_DURATION
 
 
     def isMovingRight(self):
@@ -83,6 +91,15 @@ class Player(Entity):
                 if self.currentWeapon:
                     self.setAction(f'idle_{self.currentWeapon.type}')
                 else: self.setAction('idle')
+
+        if self.dashing > 0:
+            self.dashing = max(0, self.dashing - 1)
+        if self.dashing < 0:
+            self.dashing = min(0, self.dashing + 1)
+        if abs(self.dashing) > DASH_DURATION - 10:
+            self.vel[0] = abs(self.dashing) / self.dashing * 8
+            if abs(self.dashing) == DASH_DURATION - 9:
+                self.vel[0] *= 0.2
 
         if self.vel[0] > 0:
             self.vel[0] = max(self.vel[0] - 0.1, 0)

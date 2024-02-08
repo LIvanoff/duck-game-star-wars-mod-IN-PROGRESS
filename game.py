@@ -158,6 +158,8 @@ class Game:
                 if event.key == pygame.K_q:
                     if self.player.currentWeapon:
                         self.player.currentWeapon.drop()
+                if event.key == pygame.K_z:
+                    self.player.dash()
                     # self.testWeapon.isThrow = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
