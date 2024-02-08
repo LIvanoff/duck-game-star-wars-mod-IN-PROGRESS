@@ -19,6 +19,7 @@ class Game:
         pygame.init()
 
         pygame.display.set_caption(GAME_TITLE)
+        pygame.display.set_icon(loadImg('images/icon/icon.png'))
 
         self.assets = {
             'player': loadImg('images/characters/boba-fett/bobafett.png'),
@@ -63,7 +64,7 @@ class Game:
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
         self.clock = pygame.time.Clock()
 
-        self.sounds['menu'].play()
+        self.sounds['menu'].play(-1)
 
         self.level = Level(self, name='test', background='bg_smlj')
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
