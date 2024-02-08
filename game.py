@@ -70,10 +70,12 @@ class Game:
             self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
             self.screenHeight = HEIGHT
             self.screenWidth = WIDTH
+
         self.display = pygame.Surface((self.screenWidth / 2, self.screenHeight / 2))
         self.clock = pygame.time.Clock()
 
-        self.sounds['menu'].play(-1)
+        if MUSIC_ENABLED:
+            self.sounds['menu'].play(-1)
 
         self.level = Level(self, name='test', background='bg_smlj')
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
