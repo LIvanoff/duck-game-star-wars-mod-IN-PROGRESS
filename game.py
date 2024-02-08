@@ -19,6 +19,7 @@ class Game:
         pygame.init()
 
         pygame.display.set_caption(GAME_TITLE)
+        pygame.display.set_icon(loadImg('images/icon/icon.png'))
 
         self.assets = {
             'player': loadImg('images/characters/boba-fett/bobafett.png'),
@@ -54,7 +55,9 @@ class Game:
         }
 
         self.sounds = {
-            'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3')
+            'menu': loadSound('sounds/menu/main_theme.mp3'),
+            'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3'),
+            'weapon/cocking': loadSound('sounds/weapons/cocking.mp3')
         }
         
         if IS_FULLSCREEN:
@@ -67,6 +70,8 @@ class Game:
             self.screenWidth = WIDTH
         self.display = pygame.Surface((self.screenWidth / 2, self.screenHeight / 2))
         self.clock = pygame.time.Clock()
+
+        self.sounds['menu'].play(-1)
 
         self.level = Level(self, name='test', background='bg_smlj')
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
