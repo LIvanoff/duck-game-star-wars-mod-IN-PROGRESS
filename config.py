@@ -25,12 +25,12 @@ LOCATION = [
 ROUNDS = 5
 
 WEAPONS = {
-    'dlt-19': {
-        'name': 'dlt-19',
+    'dlt-19d': {
+        'name': 'dlt-19d',
         'damage': 100,
         'ammo_num': 3,
         'decay': 1.5,
-        'img_path': 'images/weapons/dlt19.png'
+        'img_path': 'images/weapons/dlt19d.png'
     },
     'e-11': {
         'name': 'e-11',
