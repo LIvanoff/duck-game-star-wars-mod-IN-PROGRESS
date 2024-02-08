@@ -54,12 +54,16 @@ class Game:
         }
 
         self.sounds = {
-            'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3')
+            'menu': loadSound('sounds/menu/main_theme.mp3'),
+            'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3'),
+            'weapon/cocking': loadSound('sounds/weapons/cocking.mp3')
         }
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
         self.clock = pygame.time.Clock()
+
+        self.sounds['menu'].play()
 
         self.level = Level(self, name='test', background='bg_smlj')
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
