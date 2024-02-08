@@ -132,7 +132,9 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     self.player.jump()
                 if event.key == pygame.K_q:
-                    self.testWeapon.isThrow = True
+                    if self.player.currentWeapon:
+                        self.player.currentWeapon.drop()
+                    # self.testWeapon.isThrow = True
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     self.player.notMovingLeft()

@@ -18,7 +18,6 @@ class Player(Entity):
 
     def jump(self):
         if self.wallslide:
-            print(self.lastMov)
             if self.flip and self.lastMov[0] < 0:
                 self.vel[0] = JUMP_STRENGTH
                 self.vel[1] = -JUMP_STRENGTH / 1.1
@@ -95,6 +94,7 @@ class Player(Entity):
             self.currentWeapon.pos = self.pos
             self.currentWeapon.frame += 1
             self.currentWeapon.removeDeadProjectiles()
+            self.currentWeapon.flip = self.flip
             for projectile in self.currentWeapon.projectiles:
                 projectile.update(tilemap)
     

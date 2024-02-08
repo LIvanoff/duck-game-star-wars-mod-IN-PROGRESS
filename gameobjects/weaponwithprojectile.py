@@ -1,6 +1,5 @@
 from gameobjects.weapons import Weapon
 from gameobjects.projectile import Projectile
-from tilemap import Tilemap
 from config import CLOCK_TICKSPEED
 
 class WeaponWithProjectile(Weapon):
@@ -9,7 +8,7 @@ class WeaponWithProjectile(Weapon):
         self.projectiles = []
         self.decay = statsDict['decay'] * CLOCK_TICKSPEED
         self.frame = statsDict['decay'] * CLOCK_TICKSPEED
-        self.lastShotFr
+        self.lastShotFrame = 0
         
     def shoot(self):
         if self.frame - self.lastShotFrame >= self.decay:
