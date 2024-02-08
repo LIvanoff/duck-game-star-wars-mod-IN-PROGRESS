@@ -3,6 +3,7 @@ from tilemap import Tilemap
 
 from config import *
 
+
 class Weapon(Entity):
     def __init__(self,
                  game,
@@ -19,17 +20,13 @@ class Weapon(Entity):
         self.pickUpCooldown = 0
         self.isPickedUp = False
 
-    
     def shoot(self):
-        shootSound = self.game.sounds[f'{self.type}/shoot']
-        shootSound.play()
-
+        self.game.sounds[f'{self.type}/shoot'].play()
 
     def statsFromDict(self, statsDict: dict):
         self.damage = statsDict['damage']
         self.ammo_num = statsDict['ammo_num']
         self.decay = statsDict['decay']
-
 
     def drop(self):
         self.isPickedUp = False
@@ -49,10 +46,10 @@ class Weapon(Entity):
         else:
             if self.game.player.collisionRect().colliderect(self.collisionRect()):
                 self.isPickedUp = True
+                self.game.sounds['weapon/cocking'].play()
                 self.game.player.currentWeapon = self
 
         if self.vel[0] > 0:
             self.vel[0] = max(self.vel[0] - 0.1, 0)
         else:
             self.vel[0] = min(self.vel[0] + 0.1, 0)
-
