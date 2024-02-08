@@ -15,7 +15,8 @@ class Weapon(Entity):
         super().__init__(game, type, pos, size)
         self.damage = statsDict['damage']
         self.ammo_num = statsDict['ammo_num']
-        self.decay = statsDict['decay']
+        self.decay = statsDict['decay'] * CLOCK_TICKSPEED
+        self.frame = statsDict['decay'] * CLOCK_TICKSPEED
         self.shot_sound = statsDict['shot_sound_path']
         self.pickUpCooldown = 0
         self.isPickedUp = False
