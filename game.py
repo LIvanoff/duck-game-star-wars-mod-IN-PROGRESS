@@ -56,9 +56,16 @@ class Game:
         self.sounds = {
             'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3')
         }
-
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-        self.display = pygame.Surface((WIDTH / 2, HEIGHT / 2))
+        
+        if IS_FULLSCREEN:
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.screenWidth = self.screen.get_width()
+            self.screenHeight = self.screen.get_height()
+        else: 
+            self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+            self.screenHeight = HEIGHT
+            self.screenWidth = WIDTH
+        self.display = pygame.Surface((self.screenWidth / 2, self.screenHeight / 2))
         self.clock = pygame.time.Clock()
 
         self.level = Level(self, name='test', background='bg_smlj')
