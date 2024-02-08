@@ -1,6 +1,6 @@
 from entitity import Entity
 from tilemap import Tilemap
-from config import PROJECTILE_SPEED
+from config import BULLET_PROJECTILE_SPEED
 
 class Projectile(Entity):
     def __init__(self, game, type : str, pos: tuple, size: tuple, lifetime) -> None:
@@ -13,19 +13,7 @@ class Projectile(Entity):
         super().__init__(game, type, (actualx, actualy), size)
         # super().__init__(game, type, pos, size)
         self.flip = game.player.flip
+        self.affectedByGravity = False
         self.frame = 0
         self.lifetime = lifetime
         self.dead = False
-    
-    def update(self, tilemap: Tilemap):
-        if self.flip: mov = (-PROJECTILE_SPEED, 0)
-        else: mov = (PROJECTILE_SPEED, 0)
-        
-        super().update(tilemap, mov)
-
-        if (self.collisions['right'] or self.collisions['left']):
-            self.dead = True
-                
-        self.frame += 1
-        if self.frame == self.lifetime:
-            self.dead = True

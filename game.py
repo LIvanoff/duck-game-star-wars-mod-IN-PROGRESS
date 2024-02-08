@@ -9,7 +9,9 @@ from utils import loadImg, loadImgs, loadSound
 
 from level import Level
 from animation import Animation
-from gameobjects.weaponthrowable import Grenade
+from gameobjects.weapons import Weapon
+from gameobjects.grenade import Grenade
+from gameobjects.projectile import Projectile
 from gameobjects.weaponwithprojectile import WeaponWithProjectile
 from config import WEAPONS
 
@@ -46,21 +48,29 @@ class Game:
             'player/jump_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/2.png')], imgDuration=5),
             'player/wallslide_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/1.png')],imgDuration=5),
 
-            'weapon/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
-            'player/run_weapon/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
-            'player/jump_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
-            'player/idle_weapon/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')]),
+            'grenade/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
+            'player/run_grenade/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
+            'player/jump_grenade/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
+            'player/idle_grenade/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')]),
 
-            'projectile_red/idle': Animation([loadImg('images/shots/shot_red.png')])
+            'projectile_red/idle': Animation([loadImg('images/shots/shot_red.png')]),
+            'projectile_grenade/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
         }
 
         self.sounds = {
             'menu': loadSound('sounds/menu/main_theme.mp3'),
             'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3'),
-            'weapon/cocking': loadSound('sounds/weapons/cocking.mp3')
+            'grenade/thermal_imploder/shoot' : loadSound('sounds/weapons/e11.mp3'),
+            'weapon/cocking': loadSound('sounds/weapons/cocking.mp3'),
+            'projectile_grenade/thermal_imploder/explode': loadSound('sounds/weapons/thermal_imploder.mp3')
         }
 
-        self.projectiles = []
+        self.weapons : list[Weapon] = [
+            Grenade(self, "grenade/thermal_imploder", (200, 0), WEAPONS['thermal imploder']['imgsize'], WEAPONS['thermal imploder']),
+            WeaponWithProjectile(self, 'weapon/e-11', (300, 0), (34, 13), WEAPONS['e-11'])
+        ]
+
+        self.projectiles : list[Projectile] = []
         
         if IS_FULLSCREEN:
             self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -81,18 +91,9 @@ class Game:
         self.level.load(f'{LEVELS_PATH}{self.level.name}.json')
 
         self.player: Player = Player(self, (100, 0), (18, 40))
-        self.testWeapon: WeaponWithProjectile = WeaponWithProjectile(self, 'weapon/e-11', (200, 0), (34, 13), WEAPONS['e-11'])
-        # self.testWeapon: Grenade = Grenade(self, 'weapon/thermal_imploder', (210, 0), WEAPONS['thermal imploder']['imgsize'], WEAPONS['thermal imploder'])
-
-        # self.testWeapon : Weapon = Weapon(self, 'weapon/e-11', (200, 0), (34, 13))
-
-        # мне кажется это лишнее и лучше перенести в конструктор
-        # self.testWeapon.statsFromDict(WEAPONS['e-11'])
 
         self.cameraOffset = [0, 0]
 
-        # кидание гранаты, стоит пере писать
-        self.grenade = False
 
     def run(self):
         grenade_group = pygame.sprite.Group()
@@ -112,14 +113,15 @@ class Game:
             self.player.update(self.level, ((self.player.pMov[1] - self.player.pMov[0]) * 4, 0))
             self.player.render(self.display, renderOffset)
 
-            if not self.testWeapon.isPickedUp:
-                self.testWeapon.update(self.level)
-                self.testWeapon.render(self.display, renderOffset)
+
+            for weapon in self.weapons:
+                if not weapon.isPickedUp:
+                    weapon.update(self.level)
+                    weapon.render(self.display, renderOffset)
+
 
             for projectile in self.projectiles:
                 projectile.update(self.level)
-
-            for projectile in self.projectiles:
                 projectile.render(self.display, renderOffset)
                 
             self.removeDeadProjectiles()
@@ -167,5 +169,12 @@ class Game:
                 if event.key == pygame.K_d:
                     self.player.notMovingRight()
 
+    def clean(self):
+        self.removeDeadProjectiles()
+        self.removeThrownGrenades()
+
     def removeDeadProjectiles(self):
         self.projectiles = [x for x in self.projectiles if not x.dead]
+
+    def removeThrownGrenades(self):
+        pass

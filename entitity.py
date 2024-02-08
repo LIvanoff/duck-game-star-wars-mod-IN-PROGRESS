@@ -17,6 +17,7 @@ class Entity:
         self.animationOffset = (0, 0)
         self.lastMov = [0, 0]
         self.currentAction = ''
+        self.affectedByGravity = True
         self.setAction('idle')
 
 
@@ -73,8 +74,7 @@ class Entity:
 
         self.lastMov = mov
 
-        # Ну это прям фиксить надо но пока хз как )))0
-        if 'projectile' not in self.type:
+        if self.affectedByGravity:
             self.vel[1] = min(5, self.vel[1] + 0.1)
 
         if self.collisions['down'] or self.collisions['up']:
@@ -84,7 +84,6 @@ class Entity:
 
     
     def render(self, surface : pygame.Surface, offset = [0, 0]):
-        # surface.blit(self.game.assets['player'], self.pos)
         surface.blit(
             pygame.transform.flip(self.animation.img(), self.flip, False), 
             (self.pos[0] - offset[0] + self.animationOffset[0], self.pos[1] - offset[1] + self.animationOffset[1])
