@@ -45,7 +45,7 @@ class Weapon(Entity):
         if self.pickUpCooldown > 0:
             self.pickUpCooldown -= 1
         else:
-            if self.game.player.collisionRect().colliderect(self.collisionRect()):
+            if self.game.player.collisionRect().colliderect(self.collisionRect()) and self.game.player.currentWeapon is None:
                 self.isPickedUp = True
                 self.game.sounds['weapon/cocking'].play()
                 self.game.player.currentWeapon = self
