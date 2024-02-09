@@ -61,7 +61,7 @@ class Game:
             'menu': loadSound('sounds/menu/main_theme.mp3'),
             'weapon/e-11/shoot' : loadSound('sounds/weapons/e11.mp3'),
             'grenade/thermal_imploder/shoot' : loadSound('sounds/weapons/e11.mp3'),
-            'weapon/cocking': loadSound('sounds/weapons/cocking.mp3'),
+            'weapon/cocking': loadSound('sounds/weapons/cocking1.mp3'),
             'projectile_grenade/thermal_imploder/explode': loadSound('sounds/weapons/thermal_imploder.mp3')
         }
 
