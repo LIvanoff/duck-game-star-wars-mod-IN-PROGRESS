@@ -49,9 +49,9 @@ class Game:
             'player/wallslide_weapon/e-11': Animation([loadImg('images/characters/boba-fett/run_e11/1.png')],imgDuration=5),
 
             'grenade/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
-            'player/run_grenade/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run'), imgDuration=8),
-            'player/jump_grenade/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run/2.png')], imgDuration=5),
-            'player/idle_grenade/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_e11.png')]),
+            'player/run_grenade/thermal_imploder': Animation(loadImgs('images/characters/boba-fett/run_thermal_imploder'), imgDuration=8),
+            'player/jump_grenade/thermal_imploder': Animation([loadImg('images/characters/boba-fett/run_thermal_imploder/2.png')], imgDuration=5),
+            'player/idle_grenade/thermal_imploder': Animation([loadImg('images/characters/boba-fett/boba_thermal_imploder.png')]),
 
             'projectile_red/idle': Animation([loadImg('images/shots/shot_red.png')]),
             'projectile_grenade/thermal_imploder/idle': Animation([loadImg('images/weapons/thermal_imploder.png')]),
